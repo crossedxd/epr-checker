@@ -4,7 +4,7 @@ var numerics = "1234567890";
 var others = "#$%+.'’ ";
 var allowedChars = uppers + lowers + numerics + others;
 
-document.getElementById("input").onchange = function() {
+document.getElementById("input").oninput = function() {
   let input = document.getElementById("input").value;
   let words = scrubText(input).split(" ");
   let stats = "";
