@@ -34,7 +34,11 @@ document.getElementById("input").oninput = function() {
     });
   }
   document.getElementById("abbrevs").innerHTML = abbrevs;
-}
+};
+
+String.prototype.includes = function (str) {
+  return this.indexOf(str) !== -1;
+};
 
 function scrubText(text) {
   let scrubbedText = "";
@@ -50,47 +54,46 @@ function scrubText(text) {
 }
 
 function findPossibleNumbers(words) {
-  let possibleNumbers = [];
+  let possibleNumbers = {};
   words.forEach(function(word) {
     for (let i = 0; i < word.length; i++) {
       if (numerics.includes(word.charAt(i))) {
-        possibleNumbers.push(word);
+        possibleNumbers[word] = true;
         break;
       }
     }
   });
-  return [...new Set(possibleNumbers)].sort();
+  return Object.keys(possibleNumbers).sort();
 }
 
 function findPossibleAcronyms(words) {
-  let possibleAcronyms = [];
+  let possibleAcronyms = {};
   words.forEach(function(word) {
     if (word.length > 1) {
       if (word == word.toUpperCase() && findPossibleNumbers([word]).length == 0) {
-        possibleAcronyms.push(word);
+        possibleAcronyms[word] = true;
       }
     }
   });
-  return [...new Set(possibleAcronyms)].sort();
+  return Object.keys(possibleAcronyms).sort();
 }
 
 function findPossibleAbbreviations(words) {
-  let possibleAbbreviations = [];
+  let possibleAbbreviations = {};
   words.forEach(function(word_a) {
     let expr = word_a.toLowerCase()
       .split("")
-      .filter(char => lowers.includes(char));
+      .filter(function(c) { return lowers.includes(c); });
     if (expr.length > 1) {
       expr = expr.join(".*") + ".*";
       words.forEach(function(word_b) {
         if (word_a != word_b && word_a.charAt(0) == word_b.charAt(0)) {
-          //console.log("word_a:%s word_b:%s expr:%s", word_a, word_b, expr);
           if (word_b.search(expr) != -1) {
-            possibleAbbreviations.push(word_a + " -> " + word_b);
+            possibleAbbreviations[word_a + " -> " + word_b] = true;
           }
         }
       });
     }
   });
-  return [...new Set(possibleAbbreviations)].sort();
+  return Object.keys(possibleAbbreviations).sort();
 }
