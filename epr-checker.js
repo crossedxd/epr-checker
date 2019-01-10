@@ -69,7 +69,7 @@ function findPossibleNumbers(words) {
 function findPossibleAcronyms(words) {
   let possibleAcronyms = {};
   words.forEach(function(word) {
-    if (word.length > 0) {
+    if (word.length > 1) {
       if (word == word.toUpperCase() && findPossibleNumbers([word]).length == 0) {
         possibleAcronyms[word] = true;
       }
@@ -84,7 +84,7 @@ function findPossibleAbbreviations(words) {
     let expr = word_a.toLowerCase()
       .split("")
       .filter(function(c) { return lowers.includes(c); });
-    if (expr.length > 1) {
+    if (expr.length > 0) {
       expr = expr.join(".*") + ".*";
       words.forEach(function(word_b) {
         if (word_a != word_b && word_a.charAt(0) == word_b.charAt(0)) {
