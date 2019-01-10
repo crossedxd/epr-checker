@@ -69,7 +69,7 @@ function findPossibleNumbers(words) {
 function findPossibleAcronyms(words) {
   let possibleAcronyms = {};
   words.forEach(function(word) {
-    if (word.length > 1) {
+    if (word.length > 0) {
       if (word == word.toUpperCase() && findPossibleNumbers([word]).length == 0) {
         possibleAcronyms[word] = true;
       }
