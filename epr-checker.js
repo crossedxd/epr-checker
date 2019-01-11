@@ -31,7 +31,7 @@ var dictionary = getDictionary("enable1.txt");
 
 document.getElementById("input").oninput = function () {
   let input = document.getElementById("input").value;
-  let words = scrubText(input).split(" ");
+  let words = scrubText(input).split(" ").filter(function (x) { return x != ""; });
   let stats = "";
   let possibleNumbers = findPossibleNumbers(words);
   if (possibleNumbers.length > 0) {
@@ -65,6 +65,28 @@ document.getElementById("input").oninput = function () {
     });
   }
   document.getElementById("abbrevs").innerHTML = abbrevs;
+  let counts = "";
+  let wordCounts = getWordCounts(words);
+  if (Object.keys(wordCounts).length > 0) {
+    counts += "Word counts:</br>";
+    let uniqueValues = {};
+    Object.values(wordCounts).forEach(function (value) {
+      uniqueValues[value] = true;
+    });
+    uniqueValues = Object.keys(uniqueValues).sort(function (x, y) { return x - y; }).reverse();
+    uniqueValues.forEach(function (value) {
+      valueWords = [];
+      Object.keys(wordCounts).forEach(function (word) {
+        if (wordCounts[word] == value) {
+          valueWords.push(word);
+        }
+      });
+      valueWords.sort().forEach(function (word) {
+        counts += word + ": " + value + "</br>";
+      });
+    });
+  }
+  document.getElementById("counts").innerHTML = counts;
 };
 
 String.prototype.includes = function (str) {
@@ -147,4 +169,18 @@ function findPossibleAbbreviations(words) {
     }
   });
   return possibleAbbreviations;
+}
+
+/**
+ * Generates counts for all words in a given word list, using their lowercase form.
+ * @param {string[]} words A list of words.
+ * @return {Object[]} A collection of lowercase word forms and their counts.
+ */
+function getWordCounts(words) {
+  let counts = {};
+  words.forEach(function (word) {
+    let key = word.toLowerCase();
+    counts[key] = 1 + (counts[key] ? counts[key] : 0);
+  });
+  return counts;
 }
