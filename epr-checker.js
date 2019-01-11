@@ -55,8 +55,10 @@ document.getElementById("input").oninput = function () {
   if (Object.keys(possibleAbbreviations).length > 0) {
     abbrevs += "Possible abbreviation conflicts:</br>";
     Object.keys(possibleAbbreviations).sort().forEach(function (abbreviation) {
-      let line = abbreviation + " -> " + possibleAbbreviations[abbreviation] + "</br>";
-      if (!dictionary.has(abbreviation) || !dictionary.has(possibleAbbreviations[abbreviation])) {
+      let word_b = possibleAbbreviations[abbreviation];
+      let word_a = abbreviation.replace(word_b, "");
+      let line = word_a + " -> " + word_b + "</br>";
+      if (!dictionary.has(word_a) || !dictionary.has(word_b)) {
         line = "<b>" + line + "</b>";
       }
       abbrevs += line;
@@ -138,7 +140,7 @@ function findPossibleAbbreviations(words) {
       words.forEach(function (word_b) {
         if (word_a != word_b && word_a.charAt(0) == word_b.charAt(0)) {
           if (word_b.search(expr) != -1) {
-            possibleAbbreviations[word_a] = word_b;
+            possibleAbbreviations[word_a + word_b] = word_b;
           }
         }
       });
