@@ -27,10 +27,10 @@ document.getElementById("input").oninput = function() {
   document.getElementById("stats").innerHTML = stats;
   let abbrevs = "";
   let possibleAbbreviations = findPossibleAbbreviations(words);
-  if (possibleAbbreviations.length > 0) {
+  if (Object.keys(possibleAbbreviations).length > 0) {
     abbrevs += "Possible abbreviation conflicts:</br>";
-    possibleAbbreviations.forEach(function(abbreviation) {
-      abbrevs += abbreviation + "</br>";
+    Object.keys(possibleAbbreviations).sort().forEach(function(abbreviation) {
+	  abbrevs += abbreviation + " -> " + possibleAbbreviations[abbreviation] + "</br>";
     });
   }
   document.getElementById("abbrevs").innerHTML = abbrevs;
@@ -61,7 +61,7 @@ function scrubText(text) {
 /**
  * Finds all words in a given word list that contain numbers.
  * @param {string[]} words A list of words.
- * @return {string[]} A list of possible numbers from the word list.  Items in the list may be alphanumeric.
+ * @return {string[]} A sorted list of possible numbers from the word list.  Items in the list may be alphanumeric.
  */
 function findPossibleNumbers(words) {
   let possibleNumbers = {};
@@ -79,7 +79,7 @@ function findPossibleNumbers(words) {
 /**
  * Finds all words in a given word list that are completely uppercase, and aren't considered to be possible numbers.
  * @param {string[]} words A list of words.
- * @param {string[]} A list of possible acronyms from the word list.
+ * @param {string[]} A sorted list of possible acronyms from the word list.
  */
 function findPossibleAcronyms(words) {
   let possibleAcronyms = {};
@@ -109,11 +109,11 @@ function findPossibleAbbreviations(words) {
       words.forEach(function(word_b) {
         if (word_a != word_b && word_a.charAt(0) == word_b.charAt(0)) {
           if (word_b.search(expr) != -1) {
-            possibleAbbreviations[word_a + " -> " + word_b] = true;
+            possibleAbbreviations[word_a] = word_b;
           }
         }
       });
     }
   });
-  return Object.keys(possibleAbbreviations).sort();
+  return possibleAbbreviations;
 }
