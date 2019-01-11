@@ -4,14 +4,39 @@ var numerics = "1234567890";
 var others = "#$%+.'’ ";
 var allowedChars = uppers + lowers + numerics + others;
 
-document.getElementById("input").oninput = function() {
+function getDictionary(path) {
+  let words = new Set();
+  let rawFile = new XMLHttpRequest();
+  rawFile.open("GET", path);
+  rawFile.responseType = "text";
+  rawFile.onreadystatechange = function () {
+    if (rawFile.readyState === 4) {
+      if (rawFile.status === 200 || rawFile.status === 0 ) {
+        let allText = rawFile.responseText;
+        allText.split("\n").forEach(function (word) {
+          words.add(word);
+        });
+      }
+    }
+  };
+  try {
+    rawFile.send();
+  } catch (e) {
+    console.log("An error occurred while attempting to load the dictionary.  Certain checker capabilities may be degraded.");
+    console.log(e);
+  }
+  return words;
+}
+var dictionary = getDictionary("enable1.txt");
+
+document.getElementById("input").oninput = function () {
   let input = document.getElementById("input").value;
   let words = scrubText(input).split(" ");
   let stats = "";
   let possibleNumbers = findPossibleNumbers(words);
   if (possibleNumbers.length > 0) {
     stats += "Possible numbers:</br>";
-    possibleNumbers.forEach(function(number) {
+    possibleNumbers.forEach(function (number) {
       stats += number + "</br>";
     });
     stats += "</br>";
@@ -19,7 +44,7 @@ document.getElementById("input").oninput = function() {
   let possibleAcronyms = findPossibleAcronyms(words);
   if (possibleAcronyms.length > 0) {
     stats += "Possible acronyms:</br>";
-    possibleAcronyms.forEach(function(acronym) {
+    possibleAcronyms.forEach(function (acronym) {
       stats += acronym + "</br>";
     });
     stats += "</br>";
@@ -29,8 +54,12 @@ document.getElementById("input").oninput = function() {
   let possibleAbbreviations = findPossibleAbbreviations(words);
   if (Object.keys(possibleAbbreviations).length > 0) {
     abbrevs += "Possible abbreviation conflicts:</br>";
-    Object.keys(possibleAbbreviations).sort().forEach(function(abbreviation) {
-	  abbrevs += abbreviation + " -> " + possibleAbbreviations[abbreviation] + "</br>";
+    Object.keys(possibleAbbreviations).sort().forEach(function (abbreviation) {
+      let line = abbreviation + " -> " + possibleAbbreviations[abbreviation] + "</br>";
+      if (!dictionary.has(abbreviation) || !dictionary.has(possibleAbbreviations[abbreviation])) {
+        line = "<b>" + line + "</b>";
+      }
+      abbrevs += line;
     });
   }
   document.getElementById("abbrevs").innerHTML = abbrevs;
@@ -65,7 +94,7 @@ function scrubText(text) {
  */
 function findPossibleNumbers(words) {
   let possibleNumbers = {};
-  words.forEach(function(word) {
+  words.forEach(function (word) {
     for (let i = 0; i < word.length; i++) {
       if (numerics.includes(word.charAt(i))) {
         possibleNumbers[word] = true;
@@ -83,9 +112,9 @@ function findPossibleNumbers(words) {
  */
 function findPossibleAcronyms(words) {
   let possibleAcronyms = {};
-  words.forEach(function(word) {
+  words.forEach(function (word) {
     if (word.length > 1) {
-      if (word == word.toUpperCase() && findPossibleNumbers([word]).length == 0) {
+      if (word == word.toUpperCase() && findPossibleNumbers([word]).length === 0) {
         possibleAcronyms[word] = true;
       }
     }
@@ -100,13 +129,13 @@ function findPossibleAcronyms(words) {
  */
 function findPossibleAbbreviations(words) {
   let possibleAbbreviations = {};
-  words.forEach(function(word_a) {
+  words.forEach(function (word_a) {
     let expr = word_a.toLowerCase()
       .split("")
-      .filter(function(c) { return lowers.includes(c); });
+      .filter(function (c) { return lowers.includes(c); });
     if (expr.length > 0) {
       expr = expr.join(".*") + ".*";
-      words.forEach(function(word_b) {
+      words.forEach(function (word_b) {
         if (word_a != word_b && word_a.charAt(0) == word_b.charAt(0)) {
           if (word_b.search(expr) != -1) {
             possibleAbbreviations[word_a] = word_b;
