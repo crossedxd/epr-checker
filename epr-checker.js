@@ -125,7 +125,7 @@ function findPossibleAcronyms(words) {
 }
 
 /**
- * Finds all pairs of words from the word list where, given {word_a: word_b}, word_b contains all letters from word_a.
+ * Finds all pairs of words from the word list where, given {word_a: word_b}, word_b contains all lowercase letters from word_a.
  * @param {string[]} words A list of words.
  * @return {Object[]} A collection of words and the words they're possible abbreviations of.
  */
