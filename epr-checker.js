@@ -40,6 +40,11 @@ String.prototype.includes = function (str) {
   return this.indexOf(str) !== -1;
 };
 
+/**
+ * Replaces characters that aren't found in the set of allowed characters with whitespace.
+ * @param {string} text The text from which disallowed characters should be replaced.
+ * @return {string} The text with disallowed characters replaced with whitespace.
+ */
 function scrubText(text) {
   let scrubbedText = "";
   for (let i = 0; i < text.length; i++) {
@@ -53,6 +58,11 @@ function scrubText(text) {
   return scrubbedText;
 }
 
+/**
+ * Finds all words in a given word list that contain numbers.
+ * @param {string[]} words A list of words.
+ * @return {string[]} A list of possible numbers from the word list.  Items in the list may be alphanumeric.
+ */
 function findPossibleNumbers(words) {
   let possibleNumbers = {};
   words.forEach(function(word) {
@@ -66,6 +76,11 @@ function findPossibleNumbers(words) {
   return Object.keys(possibleNumbers).sort();
 }
 
+/**
+ * Finds all words in a given word list that are completely uppercase, and aren't considered to be possible numbers.
+ * @param {string[]} words A list of words.
+ * @param {string[]} A list of possible acronyms from the word list.
+ */
 function findPossibleAcronyms(words) {
   let possibleAcronyms = {};
   words.forEach(function(word) {
@@ -78,6 +93,11 @@ function findPossibleAcronyms(words) {
   return Object.keys(possibleAcronyms).sort();
 }
 
+/**
+ * Finds all pairs of words from the word list where, given {word_a: word_b}, word_b contains all letters from word_a.
+ * @param {string[]} words A list of words.
+ * @return {Object[]} A collection of words and the words they're possible abbreviations of.
+ */
 function findPossibleAbbreviations(words) {
   let possibleAbbreviations = {};
   words.forEach(function(word_a) {
