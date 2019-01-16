@@ -1,7 +1,7 @@
 var uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var lowers = "abcdefghijklmnopqrstuvwxyz";
 var numerics = "1234567890";
-var others = "#$%+.'’ ";
+var others = "#$%+.'’ &";
 var allowedChars = uppers + lowers + numerics + others;
 
 function getDictionary(path) {
