@@ -1,4 +1,36 @@
-table td,
-table td * {
-  vertical-align: top;
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.header {
+  grid-column: span 12;
+  text-align: center;
+}
+
+.input-area {
+  grid-column: span 4;
+}
+
+.input-box {
+  width: 80%;
+}
+
+.instruction-area {
+  grid-column: span 4;
+  margin: auto;
+}
+
+.instruction-box {
+  width: 80%;
+  text-align: center;
+}
+
+.output-area {
+  grid-column: span 4;
+}
+
+.footer {
+  grid-column: span 12;
+  text-align: center;
 }
