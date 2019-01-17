@@ -46,6 +46,12 @@
   text-align: center;
 }
 
+#dictionary-status {
+  color: gray;
+  text-align: left;
+  font-style: italic;
+}
+
 .footer {
   -ms-grid-column: 1;
   -ms-grid-column-span: 3;

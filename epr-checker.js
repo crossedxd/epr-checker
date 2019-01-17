@@ -5,6 +5,9 @@ var others = "#$%+.'’ &";
 var allowedChars = uppers + lowers + numerics + others;
 
 function getDictionary(path) {
+  let successMessage = "Dictionary loaded successfully.";
+  let errorMessage = "An error occurred while attempting to load the dictionary.  Certain checker capabilities may be degraded.";
+  document.getElementById("dictionary-status").innerHTML = "Loading dictionary...";
   let words = new Set();
   let rawFile = new XMLHttpRequest();
   rawFile.open("GET", path);
@@ -16,13 +19,19 @@ function getDictionary(path) {
         allText.split("\n").forEach(function (word) {
           words.add(word);
         });
+		if (words.size > 1) {
+		  document.getElementById("dictionary-status").innerHTML = successMessage;
+		} else {
+		  document.getElementById("dictionary-status").innerHTML = errorMessage;
+		}
       }
     }
   };
   try {
     rawFile.send();
   } catch (e) {
-    console.log("An error occurred while attempting to load the dictionary.  Certain checker capabilities may be degraded.");
+    
+    console.log(errorMessage);
     console.log(e);
   }
   return words;
@@ -66,8 +75,10 @@ document.getElementById("input").oninput = function () {
       let word_b = possibleAbbreviations[abbreviation];
       let word_a = abbreviation.replace(word_b, "");
       let line = word_a + " -> " + word_b + "</br>";
-      if (!dictionary.has(word_a) || !dictionary.has(word_b)) {
-        line = "<b>" + line + "</b>";
+	  if (dictionary.size > 1) {
+        if (!dictionary.has(word_a) || !dictionary.has(word_b)) {
+          line = "<b>" + line + "</b>";
+		}
       }
       output += line;
     });
