@@ -88,8 +88,8 @@ document.getElementById("input").oninput = function () {
   let wordCounts = getWordCounts(words);
   if (Object.keys(wordCounts).length > 0) {
     let uniqueValues = {};
-    Object.values(wordCounts).forEach(function (value) {
-      uniqueValues[value] = true;
+    Object.keys(wordCounts).map(function (key) {
+      uniqueValues[wordCounts[key]] = true;
     });
     uniqueValues = Object.keys(uniqueValues).sort(function (x, y) { return x - y; }).reverse();
     uniqueValues.forEach(function (value) {
