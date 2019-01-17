@@ -29,31 +29,39 @@ function getDictionary(path) {
 }
 var dictionary = getDictionary("enable1.txt");
 
+HTMLCollection.prototype.forEach = Array.prototype.forEach;
+function openTab(evt, tabName) {
+  document.getElementsByClassName("tabcontent").forEach(function (x) { x.style.display = "none"; });
+  document.getElementsByClassName("tablinks").forEach(function (x) { x.className = x.className.replace(" active", ""); });
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+document.getElementById("abbreviation-conflicts").style.display = "block";
+
 document.getElementById("input").oninput = function () {
   let input = document.getElementById("input").value;
   let words = scrubText(input).split(" ").filter(function (x) { return x != ""; });
-  let stats = "";
+  let output = "";
   let possibleNumbers = findPossibleNumbers(words);
   if (possibleNumbers.length > 0) {
-    stats += "Possible numbers:</br>";
     possibleNumbers.forEach(function (number) {
-      stats += number + "</br>";
+      output += number + "</br>";
     });
-    stats += "</br>";
+    output += "</br>";
   }
+  document.getElementById("numbers").innerHTML = output;
+  output = "";
   let possibleAcronyms = findPossibleAcronyms(words);
   if (possibleAcronyms.length > 0) {
-    stats += "Possible acronyms:</br>";
     possibleAcronyms.forEach(function (acronym) {
-      stats += acronym + "</br>";
+      output += acronym + "</br>";
     });
-    stats += "</br>";
+    output += "</br>";
   }
-  document.getElementById("stats").innerHTML = stats;
-  let abbrevs = "";
+  document.getElementById("acronyms").innerHTML = output;
+  output = "";
   let possibleAbbreviations = findPossibleAbbreviations(words);
   if (Object.keys(possibleAbbreviations).length > 0) {
-    abbrevs += "Possible abbreviation conflicts:</br>";
     Object.keys(possibleAbbreviations).sort().forEach(function (abbreviation) {
       let word_b = possibleAbbreviations[abbreviation];
       let word_a = abbreviation.replace(word_b, "");
@@ -61,14 +69,13 @@ document.getElementById("input").oninput = function () {
       if (!dictionary.has(word_a) || !dictionary.has(word_b)) {
         line = "<b>" + line + "</b>";
       }
-      abbrevs += line;
+      output += line;
     });
   }
-  document.getElementById("abbrevs").innerHTML = abbrevs;
-  let counts = "";
+  document.getElementById("abbreviation-conflicts").innerHTML = output;
+  output = "";
   let wordCounts = getWordCounts(words);
   if (Object.keys(wordCounts).length > 0) {
-    counts += "Word counts:</br>";
     let uniqueValues = {};
     Object.values(wordCounts).forEach(function (value) {
       uniqueValues[value] = true;
@@ -82,11 +89,11 @@ document.getElementById("input").oninput = function () {
         }
       });
       valueWords.sort().forEach(function (word) {
-        counts += word + ": " + value + "</br>";
+        output += word + ": " + value + "</br>";
       });
     });
   }
-  document.getElementById("counts").innerHTML = counts;
+  document.getElementById("word-counts").innerHTML = output;
 };
 
 String.prototype.includes = function (str) {

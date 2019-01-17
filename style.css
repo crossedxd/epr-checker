@@ -1,4 +1,90 @@
-table td,
-table td * {
-  vertical-align: top;
+.wrapper {
+  display: -ms-grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
+  -ms-grid-rows: auto 1fr auto;
+  display: grid;
+  grid-columns: 1fr 1fr 1fr;
+  grid-rows: auto 1fr auto;
+}
+
+.header {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  -ms-grid-row: 1;
+  grid-column: 1 / 4;
+  grid-row: 1;
+  text-align: center;
+}
+
+.input-area {
+  -ms-grid-column: 1;
+  -ms-grid-row: 2;
+  grid-column: 1;
+  grid-row: 2;
+  padding: 10%;
+}
+
+.input-textarea {
+  width: 100%;
+}
+
+.instruction-area {
+  -ms-grid-column: 2;
+  -ms-grid-row: 2;
+  grid-column: 2;
+  grid-row: 2;
+  padding: 10%;
+  text-align: center;
+}
+
+.output-area {
+  -ms-grid-column: 3;
+  -ms-grid-row: 2;
+  grid-column: 3;
+  grid-row: 2;
+  padding: 10%;
+  text-align: center;
+}
+
+.footer {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  -ms-grid-row: 3;
+  grid-column: 1 / 4;
+  grid-column-span: 3;
+  grid-row: 3;
+  color: gray;
+  text-align: center;
+}
+
+ .tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+.tab button {
+  background-color: inherit;
+  text-align: justify;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+.tab button:hover {
+  background-color: #ddd;
+}
+
+.tab button.active {
+  background-color: #ccc;
+}
+
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  height: 90%;
 }
