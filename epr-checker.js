@@ -44,7 +44,6 @@ document.getElementById("input").oninput = function () {
   let output = "";
   let possibleNumbers = findPossibleNumbers(words);
   if (possibleNumbers.length > 0) {
-    output += "Possible numbers:</br>";
     possibleNumbers.forEach(function (number) {
       output += number + "</br>";
     });
@@ -54,7 +53,6 @@ document.getElementById("input").oninput = function () {
   output = "";
   let possibleAcronyms = findPossibleAcronyms(words);
   if (possibleAcronyms.length > 0) {
-    output += "Possible acronyms:</br>";
     possibleAcronyms.forEach(function (acronym) {
       output += acronym + "</br>";
     });
@@ -64,7 +62,6 @@ document.getElementById("input").oninput = function () {
   output = "";
   let possibleAbbreviations = findPossibleAbbreviations(words);
   if (Object.keys(possibleAbbreviations).length > 0) {
-    output += "Possible abbreviation conflicts:</br>";
     Object.keys(possibleAbbreviations).sort().forEach(function (abbreviation) {
       let word_b = possibleAbbreviations[abbreviation];
       let word_a = abbreviation.replace(word_b, "");
@@ -79,7 +76,6 @@ document.getElementById("input").oninput = function () {
   output = "";
   let wordCounts = getWordCounts(words);
   if (Object.keys(wordCounts).length > 0) {
-    output += "Word counts:</br>";
     let uniqueValues = {};
     Object.values(wordCounts).forEach(function (value) {
       uniqueValues[value] = true;
