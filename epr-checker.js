@@ -73,7 +73,7 @@ document.getElementById("input").oninput = function () {
   if (Object.keys(possibleAbbreviations).length > 0) {
     Object.keys(possibleAbbreviations).sort().forEach(function (abbreviation) {
       let word_b = possibleAbbreviations[abbreviation];
-      let word_a = abbreviation.replace(word_b, "");
+      let word_a = abbreviation.substring(0, abbreviation.length - word_b.length);
       let line = word_a + " -> " + word_b + "</br>";
 	  if (dictionary.size > 1) {
         if (!dictionary.has(word_a) || !dictionary.has(word_b)) {
