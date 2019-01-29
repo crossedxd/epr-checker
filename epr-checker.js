@@ -24,7 +24,6 @@ function generateRemarks() {
 }
 
 document.getElementById("input").oninput = function () {
-  console.log("Updating...");
   let input = document.getElementById("input").value;
   let words = scrubText(input).split(" ").filter(function (x) { return x != ""; });
   let output = "";
