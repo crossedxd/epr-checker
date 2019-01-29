@@ -4,6 +4,8 @@ var numerics = "1234567890";
 var others = "#$%+.'’ &";
 var allowedChars = uppers + lowers + numerics + others;
 
+var acronymDefinitions = {};
+
 function getDictionary(path) {
   let successMessage = "Dictionary loaded successfully.";
   let errorMessage = "An error occurred while attempting to load the dictionary.  Certain checker capabilities may be degraded.";
@@ -47,6 +49,13 @@ function openTab(evt, tabName) {
 }
 document.getElementById("abbreviation-conflicts").style.display = "block";
 
+function generateRemarks() {
+  let remarks = "";
+  Object.keys(acronymDefinitions).sort().forEach(function (acronym) {
+    //TODO: implement this
+  });
+}
+
 document.getElementById("input").oninput = function () {
   let input = document.getElementById("input").value;
   let words = scrubText(input).split(" ").filter(function (x) { return x != ""; });
@@ -62,9 +71,16 @@ document.getElementById("input").oninput = function () {
   output = "";
   let possibleAcronyms = findPossibleAcronyms(words);
   if (possibleAcronyms.length > 0) {
+    output += "<table width='100%'>";
     possibleAcronyms.forEach(function (acronym) {
-      output += acronym + "</br>";
+	  let definition = acronymDefinitions[acronym] ? acronymDefinitions[acronym] : "";
+	  output += "<tr>";
+	  output += "<td>" + acronym + "</td>";
+	  output += "<td><input oninput=acronymDefinitions['" + acronym + "']=this.value value='" + definition + "'></input></td>";
+	  output += "</tr>";
     });
+	output += "</table>";
+	output += "<textarea id=remarks rows=4></textarea>";
     output += "</br>";
   }
   document.getElementById("acronyms").innerHTML = output;
