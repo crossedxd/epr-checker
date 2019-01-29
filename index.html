@@ -31,24 +31,24 @@
         <p>Once you've added bullets to the box, up to four types of information will appear on the right.</p>
         <p><b>Abbreviation conflicts:</b> this is a list of words whose letters can all be found in other words.  Bold pairs include one or more words not normally found in a dictionary, increasing the likelyhood that an abbreviation was used.</p>
         <p><b>Word counts:</b> this is a list of all words and their number of occurrences in the text.</p>
-        <p><b>Acronyms:</b> this is a list of all fully-capitalized words found in the bullets.  This list can be used to more easily determine which acronyms need to be added to the remarks section.</p>
+        <p><b>Acronyms:</b> this is a list of all fully-capitalized words found in the bullets.  Typing a description into an acronym's text box will cause the given acronym and its accompanying description to appear in the generated remarks, found below the acronym list.</p>
         <p><b>Numbers:</b> this is a list of all of numbers found in the bullets.</p>
       </div>
       <div class="output-area">
         <div class="tab">
           <button class="tablinks active" onclick="openTab(event, 'abbreviation-conflicts')">Abbreviation Conflicts</button>
-          <button class="tablinks" onclick="openTab(event, 'word-counts')">Word Counts</button>
           <button class="tablinks" onclick="openTab(event, 'acronyms')">Acronyms</button>
+          <button class="tablinks" onclick="openTab(event, 'word-counts')">Word Counts</button>
           <button class="tablinks" onclick="openTab(event, 'numbers')">Numbers</button>
         </div>
         <div id="abbreviation-conflicts" class="tabcontent"></div>
-        <div id="word-counts" class="tabcontent"></div>
         <div id="acronyms" class="tabcontent"></div>
+        <div id="word-counts" class="tabcontent"></div>
         <div id="numbers" class="tabcontent"></div>
         <div id="dictionary-status"></div>
       </div>
       <div class="footer">
-        <p>Please report any issues/bugs here: <a href="https://github.com/crossedxd/epr-checker/issues">GitHub</a></p>
+        <p>Version 0.2.0 | Please report any issues/bugs here: <a href="https://github.com/crossedxd/epr-checker/issues">GitHub</a></p>
       </div>
     </div>
 	  
