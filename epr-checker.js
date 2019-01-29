@@ -18,7 +18,9 @@ document.getElementById("abbreviation-conflicts").style.display = "block";
 function generateRemarks() {
   let remarks = [];
   Object.keys(acronymDefinitions).sort().forEach(function (acronym) {
-    remarks.push(acronymDefinitions[acronym] + " (" + acronym + ")");
+    if (acronymDefinitions[acronym] != "") {
+      remarks.push(acronymDefinitions[acronym] + " (" + acronym + ")");
+    }
   });
   return remarks.join("; ");
 }
