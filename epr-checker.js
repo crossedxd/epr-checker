@@ -50,10 +50,11 @@ function openTab(evt, tabName) {
 document.getElementById("abbreviation-conflicts").style.display = "block";
 
 function generateRemarks() {
-  let remarks = "";
+  let remarks = [];
   Object.keys(acronymDefinitions).sort().forEach(function (acronym) {
-    //TODO: implement this
+    remarks.push(acronymDefinitions[acronym] + " (" + acronym + ")");
   });
+  return remarks.join("; ");
 }
 
 document.getElementById("input").oninput = function () {
@@ -73,15 +74,12 @@ document.getElementById("input").oninput = function () {
   if (possibleAcronyms.length > 0) {
     output += "<table width='100%'>";
     possibleAcronyms.forEach(function (acronym) {
-	  let definition = acronymDefinitions[acronym] ? acronymDefinitions[acronym] : "";
-	  output += "<tr>";
-	  output += "<td>" + acronym + "</td>";
-	  output += "<td><input oninput=acronymDefinitions['" + acronym + "']=this.value value='" + definition + "'></input></td>";
-	  output += "</tr>";
+	    let definition = acronymDefinitions[acronym] ? acronymDefinitions[acronym] : "";
+      output += "<tr><td>" + acronym + "</td><td><input oninput=acronymDefinitions['" +
+                acronym + "']=this.value;document.getElementById('remarks').innerHTML=generateRemarks() value='" + definition + "'></input></td></tr>";
     });
-	output += "</table>";
-	output += "<textarea id=remarks rows=4></textarea>";
-    output += "</br>";
+    output += "</table>Generated remarks below:</br>";
+    output += "<textarea class=input-textarea id=remarks rows=4>" + generateRemarks() + "</textarea></br>";
   }
   document.getElementById("acronyms").innerHTML = output;
   output = "";
