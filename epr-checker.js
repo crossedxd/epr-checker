@@ -6,40 +6,6 @@ var allowedChars = uppers + lowers + numerics + others;
 
 var acronymDefinitions = {};
 
-function getDictionary(path) {
-  let successMessage = "Dictionary loaded successfully.";
-  let errorMessage = "An error occurred while attempting to load the dictionary.  Certain checker capabilities may be degraded.";
-  document.getElementById("dictionary-status").innerHTML = "Loading dictionary...";
-  let words = new Set();
-  let rawFile = new XMLHttpRequest();
-  try {
-    rawFile.open("GET", path);
-    rawFile.responseType = "text";
-    rawFile.onreadystatechange = function () {
-      if (rawFile.readyState === 4) {
-        if (rawFile.status === 200 || rawFile.status === 0 ) {
-          let allText = rawFile.responseText;
-          allText.split("\r\n").forEach(function (word) {
-            words.add(word);
-          });
-      if (words.size > 1) {
-        document.getElementById("dictionary-status").innerHTML = successMessage;
-      } else {
-        document.getElementById("dictionary-status").innerHTML = errorMessage;
-      }
-        }
-      }
-    };
-    rawFile.send();
-  } catch (e) {
-    document.getElementById("dictionary-status").innerHTML = errorMessage;
-    console.log(errorMessage);
-    console.log(e);
-  }
-  return words;
-}
-var dictionary = getDictionary("enable1.txt");
-
 HTMLCollection.prototype.forEach = Array.prototype.forEach;
 function openTab(evt, tabName) {
   document.getElementsByClassName("tabcontent").forEach(function (x) { x.style.display = "none"; });
@@ -58,6 +24,7 @@ function generateRemarks() {
 }
 
 document.getElementById("input").oninput = function () {
+  console.log("Updating...");
   let input = document.getElementById("input").value;
   let words = scrubText(input).split(" ").filter(function (x) { return x != ""; });
   let output = "";
@@ -120,6 +87,42 @@ document.getElementById("input").oninput = function () {
   }
   document.getElementById("word-counts").innerHTML = output;
 };
+
+function getDictionary(path) {
+  let successMessage = "Dictionary loaded successfully.";
+  let errorMessage = "An error occurred while attempting to load the dictionary.  Certain checker capabilities may be degraded.";
+  document.getElementById("dictionary-status").innerHTML = "Loading dictionary...";
+  let words = new Set();
+  let rawFile = new XMLHttpRequest();
+  try {
+    rawFile.open("GET", path);
+    rawFile.responseType = "text";
+    rawFile.onreadystatechange = function () {
+      if (rawFile.readyState === 4) {
+        if (rawFile.status === 200 || rawFile.status === 0 ) {
+          let allText = rawFile.responseText;
+          allText.split("\r\n").forEach(function (word) {
+            words.add(word);
+          });
+      if (words.size > 1) {
+        document.getElementById("dictionary-status").innerHTML = successMessage;
+      } else {
+        document.getElementById("dictionary-status").innerHTML = errorMessage;
+      }
+        }
+      }
+    };
+    rawFile.send();
+  } catch (e) {
+    document.getElementById("dictionary-status").innerHTML = errorMessage;
+    console.log(errorMessage);
+    console.log(e);
+  }
+  return words;
+}
+
+var dictionary = getDictionary("enable1.txt");
+document.getElementById("input").oninput();
 
 String.prototype.includes = function (str) {
   return this.indexOf(str) !== -1;
