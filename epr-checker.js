@@ -19,7 +19,7 @@ function getDictionary(path) {
       if (rawFile.readyState === 4) {
         if (rawFile.status === 200 || rawFile.status === 0 ) {
           let allText = rawFile.responseText;
-          allText.split("\n").forEach(function (word) {
+          allText.split("\r\n").forEach(function (word) {
             words.add(word);
           });
       if (words.size > 1) {
