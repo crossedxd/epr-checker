@@ -12,27 +12,27 @@ function getDictionary(path) {
   document.getElementById("dictionary-status").innerHTML = "Loading dictionary...";
   let words = new Set();
   let rawFile = new XMLHttpRequest();
-  rawFile.open("GET", path);
-  rawFile.responseType = "text";
-  rawFile.onreadystatechange = function () {
-    if (rawFile.readyState === 4) {
-      if (rawFile.status === 200 || rawFile.status === 0 ) {
-        let allText = rawFile.responseText;
-        allText.split("\n").forEach(function (word) {
-          words.add(word);
-        });
-		if (words.size > 1) {
-		  document.getElementById("dictionary-status").innerHTML = successMessage;
-		} else {
-		  document.getElementById("dictionary-status").innerHTML = errorMessage;
-		}
-      }
-    }
-  };
   try {
+    rawFile.open("GET", path);
+    rawFile.responseType = "text";
+    rawFile.onreadystatechange = function () {
+      if (rawFile.readyState === 4) {
+        if (rawFile.status === 200 || rawFile.status === 0 ) {
+          let allText = rawFile.responseText;
+          allText.split("\n").forEach(function (word) {
+            words.add(word);
+          });
+      if (words.size > 1) {
+        document.getElementById("dictionary-status").innerHTML = successMessage;
+      } else {
+        document.getElementById("dictionary-status").innerHTML = errorMessage;
+      }
+        }
+      }
+    };
     rawFile.send();
   } catch (e) {
-    
+    document.getElementById("dictionary-status").innerHTML = errorMessage;
     console.log(errorMessage);
     console.log(e);
   }
