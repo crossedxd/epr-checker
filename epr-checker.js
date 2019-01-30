@@ -16,9 +16,13 @@ function openTab(evt, tabName) {
 document.getElementById("abbreviation-conflicts").style.display = "block";
 
 function generateRemarks() {
+  let input = document.getElementById("input").value;
+  let words = scrubText(input).split(" ").filter(function (x) { return x != ""; });
+  let acronyms = findPossibleAcronyms(words);
   let remarks = [];
-  Object.keys(acronymDefinitions).sort().forEach(function (acronym) {
-    if (acronymDefinitions[acronym] != "") {
+  Object.keys(acronyms).sort().forEach(function (key) {
+    let acronym = acronyms[key];
+    if (acronymDefinitions[acronym] && acronymDefinitions[acronym] != "") {
       remarks.push(acronymDefinitions[acronym] + " (" + acronym + ")");
     }
   });
