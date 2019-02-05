@@ -20,8 +20,7 @@ function generateRemarks() {
   let words = scrubText(input).split(" ").filter(function (x) { return x != ""; });
   let acronyms = findPossibleAcronyms(words);
   let remarks = [];
-  Object.keys(acronyms).sort().forEach(function (key) {
-    let acronym = acronyms[key];
+  acronyms.sort().forEach(function (acronym) {
     if (acronymDefinitions[acronym] && acronymDefinitions[acronym] != "") {
       remarks.push(acronymDefinitions[acronym] + " (" + acronym + ")");
     }
