@@ -16,7 +16,7 @@ function openTab(evt, tabName) {
 document.getElementById("abbreviation-conflicts").style.display = "block";
 
 function generateRemarks() {
-  let input = document.getElementById("input").value;
+  let input = document.getElementById("input").innerText;
   let words = scrubText(input).split(" ").filter(function (x) { return x != ""; });
   let acronyms = findPossibleAcronyms(words);
   let remarks = [];
@@ -28,8 +28,8 @@ function generateRemarks() {
   return remarks.join("; ");
 }
 
-document.getElementById("input").oninput = function () {
-  let input = document.getElementById("input").value;
+document.getElementById("input").onkeyup = function () {
+  let input = document.getElementById("input").innerText;
   let words = scrubText(input).split(" ").filter(function (x) { return x != ""; });
   let output = "";
   let possibleNumbers = findPossibleNumbers(words);
@@ -50,7 +50,7 @@ document.getElementById("input").oninput = function () {
                 acronym + "']=this.value;document.getElementById('remarks').innerHTML=generateRemarks() value='" + definition + "'></input></td></tr>";
     });
     output += "</table>Generated remarks below:</br>";
-    output += "<textarea class=input-textarea id=remarks rows=4>" + generateRemarks() + "</textarea></br>";
+	output += "<div class=remarks id=remarks contentEditable=true>" + generateRemarks() + "</div>";
   }
   document.getElementById("acronyms").innerHTML = output;
   output = "";
@@ -126,7 +126,7 @@ function getDictionary(path) {
 }
 
 var dictionary = getDictionary("enable1.txt");
-document.getElementById("input").oninput();
+document.getElementById("input").onkeyup();
 
 String.prototype.includes = function (str) {
   return this.indexOf(str) !== -1;

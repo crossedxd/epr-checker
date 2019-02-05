@@ -1,10 +1,15 @@
+body {
+  margin: 0;
+}
+
 .wrapper {
   display: -ms-grid;
   -ms-grid-columns: 1fr 1fr 1fr;
   -ms-grid-rows: auto 1fr auto;
   display: grid;
-  grid-columns: 1fr 1fr 1fr;
-  grid-rows: auto 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
 }
 
 .header {
@@ -21,11 +26,19 @@
   -ms-grid-row: 2;
   grid-column: 1;
   grid-row: 2;
-  padding: 10%;
+  padding: 5%;
+  overflow-y: auto;
 }
 
-.input-textarea {
-  width: 100%;
+.input-text {
+  border: 1px solid #ccc;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.input-text:empty:not(:focus):before {
+  content: "Paste bullets here...";
+  color: grey;
 }
 
 .instruction-area {
@@ -33,7 +46,7 @@
   -ms-grid-row: 2;
   grid-column: 2;
   grid-row: 2;
-  padding: 10%;
+  padding: 5%;
   text-align: center;
 }
 
@@ -42,8 +55,25 @@
   -ms-grid-row: 2;
   grid-column: 3;
   grid-row: 2;
-  padding: 10%;
+  padding: 5%;
   text-align: center;
+  overflow-y: auto;
+}
+
+.footer {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  -ms-grid-row: 3;
+  grid-column: 1 / 4;
+  grid-row: 3;
+  color: gray;
+  text-align: center;
+}
+
+.remarks {
+  border: 1px solid #ccc;
+  width: 100%;
+  min-height: 20%;
 }
 
 #dictionary-status {
@@ -52,19 +82,7 @@
   font-style: italic;
 }
 
-.footer {
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 3;
-  -ms-grid-row: 3;
-  grid-column: 1 / 4;
-  grid-column-span: 3;
-  grid-row: 3;
-  color: gray;
-  text-align: center;
-}
-
- .tab {
-  overflow: hidden;
+.tab {
   border: 1px solid #ccc;
   background-color: #f1f1f1;
 }
@@ -76,7 +94,6 @@
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
-  transition: 0.3s;
 }
 
 .tab button:hover {
@@ -93,4 +110,5 @@
   border: 1px solid #ccc;
   border-top: none;
   height: 90%;
+  overflow-y: auto;
 }
