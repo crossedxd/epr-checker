@@ -21,7 +21,7 @@ function generateRemarks() {
   let acronyms = findPossibleAcronyms(words);
   let remarks = [];
   acronyms.sort().forEach(function (acronym) {
-    if (acronymDefinitions[acronym] && acronymDefinitions[acronym] != "") {
+    if (acronymDefinitions[acronym] && acronymDefinitions[acronym].trim() != "") {
       remarks.push(acronymDefinitions[acronym] + " (" + acronym + ")");
     }
   });
