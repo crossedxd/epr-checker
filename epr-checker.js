@@ -110,6 +110,7 @@ function getDictionary(path) {
           });
       if (words.size > 1) {
         document.getElementById("dictionary-status").innerHTML = successMessage;
+        document.getElementById("input").onkeyup();
       } else {
         document.getElementById("dictionary-status").innerHTML = errorMessage;
       }
@@ -126,7 +127,6 @@ function getDictionary(path) {
 }
 
 var dictionary = getDictionary("enable1.txt");
-document.getElementById("input").onkeyup();
 
 String.prototype.includes = function (str) {
   return this.indexOf(str) !== -1;
