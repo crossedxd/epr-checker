@@ -193,12 +193,13 @@ function findPossibleAcronyms(words) {
 function findPossibleAbbreviations(words) {
   let possibleAbbreviations = {};
   words.forEach(function (word_a) {
-    let expr = word_a.toLowerCase()
-      .split("")
+    word_a = word_a.toLowerCase();
+    let expr = word_a.split("")
       .filter(function (c) { return lowers.includes(c); });
     if (expr.length > 0) {
       expr = expr.join(".*") + ".*";
       words.forEach(function (word_b) {
+        word_b = word_b.toLowerCase();
         if (word_a.length < word_b.length && word_a.charAt(0) == word_b.charAt(0)) {
           if (word_b.search(expr) != -1) {
             possibleAbbreviations[word_a + word_b] = word_b;
