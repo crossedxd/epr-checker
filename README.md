@@ -36,7 +36,7 @@ EPR Checker has been tested against and is compatible with Firefox, Edge, Chrome
 ### Does EPR Checker keep a copy of my bullets?
 No.  All of the processing and analysis EPR Checker does is done client-side (on your computer).
 
-### Why "EPR Checker"?  It's kinda lame...
+### Why "EPR Checker"?  That name's kinda lame...
 I chose the name "EPR Checker" because I wanted something plain and on-the-nose.  I believe that cool names have to be earned, not given, and dull names can also act as a sort of safeguard against requirements creep and can keep expectations grounded in reality.
 
 [Here's](http://theengineeringmanager.com/growth/project-x/) an interesting (fictional) story about the sort of damage a wild project name can do.
