@@ -47,6 +47,10 @@ body {
   grid-column: 2;
   grid-row: 2;
   padding: 5%;
+  text-align: left;
+}
+
+.instruction-area > h3 {
   text-align: center;
 }
 
