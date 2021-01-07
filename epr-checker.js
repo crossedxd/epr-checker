@@ -45,12 +45,12 @@ document.getElementById("input").onkeyup = function () {
   if (possibleAcronyms.length > 0) {
     output += "<table width='100%'>";
     possibleAcronyms.forEach(function (acronym) {
-	    let definition = acronymDefinitions[acronym] ? acronymDefinitions[acronym] : "";
+      let definition = acronymDefinitions[acronym] ? acronymDefinitions[acronym] : "";
       output += "<tr><td>" + acronym + "</td><td><input oninput=acronymDefinitions['" +
-                acronym + "']=this.value;document.getElementById('remarks').innerHTML=generateRemarks() value='" + definition + "'></input></td></tr>";
+        acronym + "']=this.value;document.getElementById('remarks').innerHTML=generateRemarks() value='" + definition + "'></input></td></tr>";
     });
     output += "</table>Generated remarks below:</br>";
-	output += "<div class=remarks id=remarks contentEditable=true>" + generateRemarks() + "</div>";
+    output += "<div class=remarks id=remarks contentEditable=true>" + generateRemarks() + "</div>";
   }
   document.getElementById("acronyms").innerHTML = output;
   output = "";
@@ -60,10 +60,10 @@ document.getElementById("input").onkeyup = function () {
       let word_b = possibleAbbreviations[abbreviation];
       let word_a = abbreviation.substring(0, abbreviation.length - word_b.length);
       let line = word_a + " -> " + word_b + "</br>";
-	  if (dictionary.size > 1) {
+      if (dictionary.size > 1) {
         if (!dictionary.has(word_a) || !dictionary.has(word_b)) {
           line = "<b>" + line + "</b>";
-		}
+        }
       }
       output += line;
     });
@@ -103,17 +103,17 @@ function getDictionary(path) {
     rawFile.responseType = "text";
     rawFile.onreadystatechange = function () {
       if (rawFile.readyState === 4) {
-        if (rawFile.status === 200 || rawFile.status === 0 ) {
+        if (rawFile.status === 200 || rawFile.status === 0) {
           let allText = rawFile.responseText;
           allText.split(/\r?\n/).forEach(function (word) {
             words.add(word);
           });
-      if (words.size > 1) {
-        document.getElementById("dictionary-status").innerHTML = successMessage;
-        document.getElementById("input").onkeyup();
-      } else {
-        document.getElementById("dictionary-status").innerHTML = errorMessage;
-      }
+          if (words.size > 1) {
+            document.getElementById("dictionary-status").innerHTML = successMessage;
+            document.getElementById("input").onkeyup();
+          } else {
+            document.getElementById("dictionary-status").innerHTML = errorMessage;
+          }
         }
       }
     };
